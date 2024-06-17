@@ -51,9 +51,12 @@ void loop() {
   // Wait for 100 ms
   delay(100);
 
-  // Send "hello world" message over UART
-  uartSerialPort.print("G&48");
-  Serial.println("Sent G message");
+  for (int i=0; i<24; i++){
+    // Send "hello world" message over UART
+    uartSerialPort.print(formatMessage('G'));
+    Serial.println("Sent G message");
+    delay(340);
+  }
 
   // Wait for 1000 ms
   delay(1000);
@@ -63,4 +66,13 @@ void loop() {
 
   // Wait for some time before repeating
   delay(1000);
+}
+
+// Function to format character messages per the required format of Adapt Solutions
+String formatMessage(char inputChar) {
+    String formattedMessage = "&";
+    formattedMessage += inputChar;
+    formattedMessage += '\r'; // Carriage return before hex value
+    formattedMessage += String((int)inputChar, HEX);
+    return formattedMessage;
 }
