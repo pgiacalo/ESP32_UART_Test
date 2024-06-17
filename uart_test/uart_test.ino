@@ -25,6 +25,8 @@ void enableUart() {
   // Initialize UART communication
   uartSerialPort.begin(uartBaudRate, SERIAL_8N1, uartRxPin, uartTxPin);
   Serial.println("UART initialized");
+  // Wait for 100 ms
+  delay(100);
 }
 
 void disableUart() {
@@ -48,18 +50,14 @@ void loop() {
   // Enable UART and set the UART TX pin to HIGH
   enableUart();
 
-  // Wait for 100 ms
-  delay(100);
 
   for (int i=0; i<24; i++){
     // Send "hello world" message over UART
+    enableUart();
     uartSerialPort.print(formatMessage('G'));
     Serial.println("Sent G message");
     delay(340);
   }
-
-  // Wait for 1000 ms
-  delay(1000);
 
   // Disable UART and set the UART TX pin to LOW
   disableUart();
